@@ -4,6 +4,8 @@ Bu proje, geliştiriciler arasında tutarlı bir geliştirme ortamı sağlamak i
 
 ## Gereksinimler
 
+Aşağıdaki linklerden VirtualBox ve Vagrantı lokal bilgisayarınıza kurun.
+
 - [VirtualBox](https://www.virtualbox.org/)
 - [Vagrant](https://www.vagrantup.com/)
 
