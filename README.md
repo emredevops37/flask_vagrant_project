@@ -11,8 +11,8 @@ Bu proje, geliştiriciler arasında tutarlı bir geliştirme ortamı sağlamak i
 
 1. Repoyu klonlayın:
 ```
-git clone https://github.com/emredevops37/flask-vagrant-project.git
-cd flask-vagrant-project
+git clone https://github.com/emredevops37/flask_vagrant_project.git
+cd flask_vagrant_project
 ```
 2. Vagrant VM'i başlatın:
 ```
