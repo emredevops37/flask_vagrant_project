@@ -55,7 +55,5 @@ sudo systemctl daemon-reload
 sudo systemctl start flask-app
 sudo systemctl enable flask-app
 
-chmod +x /vagrant/start_dev.sh
-
 echo "Flask uygulaması kurulumu tamamlandı!"
 echo "http://localhost:5000/ ve http://localhost:8080/ 'den sayfayı görebilirsiniz :)"
