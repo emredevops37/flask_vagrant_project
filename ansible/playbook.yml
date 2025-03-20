@@ -1,0 +1,82 @@
+---
+- name: Flask Uygulaması Kurulumu
+  hosts: all
+  become: true
+  tasks:
+    - name: Sistem paketlerini güncelle
+      apt:
+        update_cache: yes
+      
+    - name: Sistemi yükselt
+      apt:
+        upgrade: yes
+
+    - name: Gerekli paketleri kur
+      apt:
+        name:
+          - python3
+          - python3-pip
+          - python3-venv
+          - nginx
+        state: present
+
+    - name: Python sanal ortamı oluştur
+      command: python3 -m venv /home/vagrant/venv
+      args:
+        creates: /home/vagrant/venv
+      become_user: vagrant
+
+    - name: requirements.txt dosyasını kullanarak Python paketlerini yükle
+      pip:
+        requirements: /vagrant/requirements.txt
+        virtualenv: /home/vagrant/venv
+      become_user: vagrant
+
+    - name: Nginx yapılandırma dosyasını oluştur
+      template:
+        src: /vagrant/nginx.conf.j2
+        dest: /etc/nginx/sites-available/flask-app
+      notify: restart nginx
+
+    - name: Nginx sitesini etkinleştir
+      file:
+        src: /etc/nginx/sites-available/flask-app
+        dest: /etc/nginx/sites-enabled/flask-app
+        state: link
+
+    - name: Default Nginx sitesini devre dışı bırak
+      file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+      notify: restart nginx
+
+    - name: Flask uygulaması için systemd servis dosyasını oluştur
+      template:
+        src: /vagrant/flask-app.service.j2
+        dest: /etc/systemd/system/flask-app.service
+
+    - name: Systemd daemon-reload yap
+      systemd:
+        daemon_reload: yes
+
+    - name: Flask uygulamasını başlat ve etkinleştir
+      systemd:
+        name: flask-app
+        state: started
+        enabled: yes
+
+    - name: start_dev.sh için izinleri ayarla
+      file:
+        path: /vagrant/start_dev.sh
+        mode: '0755'
+      when: ansible_path is defined and ansible_path.stat.exists
+
+    - name: Kurulumun tamamlandığını göster
+      debug:
+        msg: "Flask uygulaması kurulumu tamamlandı! http://localhost:5000/ ve http://localhost:8080/ üzerinden erişebilirsiniz."
+
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted

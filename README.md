@@ -16,6 +16,10 @@ Aşağıdaki linklerden VirtualBox ve Vagrantı lokal bilgisayarınıza kurun.
 git clone https://github.com/emredevops37/flask_vagrant_project.git
 cd flask_vagrant_project
 ```
+Eğer vagrant ortamını ansible ile düzenlemek isterseniz:
+```
+cd ansible
+``` 
 2. Vagrant VM'i başlatın:
 ```
 vagrant up
@@ -29,4 +33,10 @@ vagrant up
 
 ## Geliştirme
 
-- Kod değişikliklerini yerel makinenizde yapabilirsiniz, değişiklikler VM'e otomatik olarak senkronize edilecektir.
+- Kod değişikliklerini yerel makinenizde yapabilirsiniz, değişiklikler VM'e otomatik olarak senkronize edilecektir.Değişiklikleri görmek için Browser'ı yenileyin (F5'e basın)
+
+## VM Yönetimi
+
+- VM'e SSH ile bağlanmak için: `vagrant ssh`
+- VM'i durdurmak için: `vagrant halt`
+- VM'i silmek için: `vagrant destroy`
